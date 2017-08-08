@@ -9,7 +9,7 @@ namespace BasicAuthentication.Controllers
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly UserManager<ApplicationUser> _userManager;
+        public UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext db)
@@ -17,6 +17,10 @@ namespace BasicAuthentication.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _db = db;
+        }
+        public AccountController()
+    : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+        {
         }
 
         public IActionResult Index()
